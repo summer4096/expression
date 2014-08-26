@@ -374,7 +374,9 @@ type('feet', {
     'sq foot': {power: 2},
     'sq feet': {power: 2},
     'sq ft': {power: 2},
-    'sqft': {power: 2}
+    'sqft': {power: 2},
+    'cubic foot': {power: 3},
+    'cubic feet': {power: 3}
   },
   conversion: 30.48,
   collection: 'length',
@@ -399,7 +401,9 @@ type('inches', {
     'sq inch': {power: 2},
     'sq inches': {power: 2},
     'sq in': {power: 2},
-    'sqin': {power: 2}
+    'sqin': {power: 2},
+    'cubic inch': {power: 3},
+    'cubic inches': {power: 3}
   },
   conversion: 2.54,
   collection: 'length',
