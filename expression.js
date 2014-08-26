@@ -332,8 +332,23 @@ type('unit', {
     this.ignore = true;
     return true;
   },
+  terms: {
+    singular: 'unit',
+    plural: 'units'
+  },
   format: function(){
-    return this.amount + ' units' + (this.power > 1 ? '^'+this.power : '');
+    var powerTerm;
+    if (this.terms.powers && this.terms.powers[this.power]) {
+      powerTerm = this.terms.powers[this.power];
+    } else {
+      powerTerm = '$1^'+this.power
+    }
+
+    if (this.power == 1) {
+      return this.amount+' '+this.terms[(this.amount == 1 ? 'singular' : 'plural')];
+    } else {
+      return this.amount+' '+powerTerm.split('$1').join(this.terms[(this.amount == 1 ? 'singular' : 'plural')]);
+    }
   },
   run: function(before, after){
     if (before.type == 'numeric') {
@@ -363,23 +378,12 @@ type('feet', {
   },
   conversion: 30.48,
   collection: 'length',
-  format: function(){
-    var term = (this.amount == 1 ? 'foot' : 'feet');
-    var powerTerm = false;
-    if (this.power == 2) {
-      powerTerm = 'square';
-    } else if (this.power == 3) {
-      powerTerm = 'cubic';
-    }
-
-    if (this.power == 1) {
-      return this.amount+' '+term;
-    } else {
-      if (powerTerm) {
-        return this.amount + ' ' + powerTerm + ' ' + term;
-      } else {
-        return this.amount + ' ' + term+'^'+this.power;
-      }
+  terms: {
+    singular: 'foot',
+    plural: 'feet',
+    powers: {
+      2: 'square $1',
+      3: 'cubic $1'
     }
   }
 }, types.unit);
@@ -399,23 +403,12 @@ type('inches', {
   },
   conversion: 2.54,
   collection: 'length',
-  format: function(){
-    var term = 'inch'+(this.amount == 1 ? '' : 'es');
-    var powerTerm = false;
-    if (this.power == 2) {
-      powerTerm = 'square';
-    } else if (this.power == 3) {
-      powerTerm = 'cubic';
-    }
-
-    if (this.power == 1) {
-      return this.amount+' '+term;
-    } else {
-      if (powerTerm) {
-        return this.amount + ' ' + powerTerm + ' ' + term;
-      } else {
-        return this.amount + ' ' + term+'^'+this.power;
-      }
+  terms: {
+    singular: 'inch',
+    plural: 'inches',
+    powers: {
+      2: 'square $1',
+      3: 'cubic $1'
     }
   }
 }, types.unit);
