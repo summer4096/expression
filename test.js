@@ -9,5 +9,4 @@ console.log( (new Expression('testExpression', '2^8')).run().format() );
 console.log( (new Expression('testExpression', '2 feet - 2 inches')).run().format() );
 console.log( (new Expression('testExpression', '2 feet * 6 inches')).run().format() );
 console.log( (new Expression('testExpression', '500 feet^2 / 2')).run().format() );
-
-//console.log( (new Expression('testExpression', '2 feet in inches')).run().format() );
+console.log( (new Expression('testExpression', '144 inches to feet')).run().format() );

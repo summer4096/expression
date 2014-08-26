@@ -313,6 +313,25 @@ type('unit', {
     other.ignore = true;
     return true;
   },
+  convert: function(other){
+    if (other.parents().indexOf('unit') != -1) {
+      if (this.collection == other.collection) {
+        if (this.power == other.power) {
+          other.value = this.value;
+          other.amount = other.value / other.conversion;
+          other.run = false;
+        } else {
+          throw 'cannot convert between powers';
+        }
+      } else {
+        throw 'cannot convert '+this.collection+' to '+other.collection;
+      }
+    } else {
+      return false;
+    }
+    this.ignore = true;
+    return true;
+  },
   format: function(){
     return this.amount + ' units' + (this.power > 1 ? '^'+this.power : '');
   },
@@ -409,7 +428,8 @@ type('operator', {
     '*': {operation: 'multiply', symmetrical: true, order: 3},
     '/': {operation: 'divide', order: 3},
     '^': {operation: 'exponent', order: 4},
-    '%': {operation: 'modulus', order: 3}
+    '%': {operation: 'modulus', order: 3},
+    'to': {operation: 'convert', order: 5}
   },
   init: function(text, options){
     types.base.prototype.init.apply(this, arguments);
